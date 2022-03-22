@@ -45,6 +45,12 @@ class FileManager extends Component
         ]);
 
         Storage::makeDirectory($this->currentDirectory.'/'.$this->directoryName);
+
+        if(env('DEMO'))
+        {
+            $fileName = '.gitignore';
+            Storage::copy('public/' . $fileName, $this->currentDirectory.'/'.$this->directoryName);
+        }
         $this->close('modal-new-directory');
         $this->mount();
     }
