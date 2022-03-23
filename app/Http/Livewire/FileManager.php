@@ -4,9 +4,11 @@ namespace App\Http\Livewire;
 
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class FileManager extends Component
 {
+    use WithFileUploads;
 
     public $currentDirectory = 'public';
     public $directories;
@@ -15,12 +17,29 @@ class FileManager extends Component
     public $previousDirectory;
 
     public $directoryName;
+    public $fileUpload;
+
+    public $onDeleteStateName;
+    public $onDeleteStateType;
 
     public function mount()
     {
         $this->directories = Storage::directories($this->currentDirectory);
         $this->files = Storage::files($this->currentDirectory);
         $this->generatePaths();
+    }
+
+    public function saveFile()
+    {
+        $this->validate([
+            'fileUpload' => 'required'
+        ],[
+            'fileUpload.required' => 'Need to upload some file',
+        ]);
+
+        Storage::putFileAs($this->currentDirectory.'/', $this->fileUpload, $this->fileUpload->getClientOriginalName());
+        $this->close('modal-upload-file');
+        $this->mount();
     }
 
     public function close($modalName)
@@ -36,6 +55,25 @@ class FileManager extends Component
         $this->previousDirectory = $newPath == '' ? 'public' : $newPath;
     }
 
+    public function deleteState($name, $type)
+    {
+        $this->onDeleteStateName = $name;
+        $this->onDeleteStateType = $type;
+    }
+
+    public function deleteConfirm()
+    {
+        if($this->onDeleteStateType == "directory")
+        {
+            Storage::deleteDirectory($this->onDeleteStateName);
+        }else{
+            Storage::delete($this->onDeleteStateName);
+        }
+        $this->close('modal-delete');
+        $this->reset(['onDeleteStateName', 'onDeleteStateType']);
+        $this->mount();
+    }
+
     public function createDirectory()
     {
         $this->validate([
@@ -46,11 +84,6 @@ class FileManager extends Component
 
         Storage::makeDirectory($this->currentDirectory.'/'.$this->directoryName);
 
-        if(env('DEMO'))
-        {
-            $fileName = '.gitignore';
-            Storage::copy('public/' . $fileName, $this->currentDirectory.'/'.$this->directoryName);
-        }
         $this->close('modal-new-directory');
         $this->mount();
     }
