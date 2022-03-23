@@ -92,7 +92,7 @@
                                         </a>
 
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <li><a class="dropdown-item" href="#">Download</a></li>
+                                        <li><a class="dropdown-item" href="#" wire:click="download('{{$file}}')">Download</a></li>
                                         <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modal-delete" data-backdrop="static" data-keyboard="false" wire:click="deleteState('{{$file}}', 'file')">Delete</a></li>
                                         </ul>
                                     </div>

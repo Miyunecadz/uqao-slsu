@@ -88,6 +88,11 @@ class FileManager extends Component
         $this->mount();
     }
 
+    public function download($fileName)
+    {
+        return Storage::download($fileName);
+    }
+
     public function setDirectory($directory)
     {
         $this->currentDirectory = $directory;
