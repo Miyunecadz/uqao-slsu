@@ -1,4 +1,4 @@
-<div>
+<div class="mt-3">
     <div class="d-flex">
         <div class="me-auto">
             <small>Current Directory</small>
@@ -93,6 +93,14 @@
                                         </a>
 
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <li>
+                                            <form action="{{route('file.open')}}" method="post">
+                                                @csrf
+                                                <input type="hidden" name="file" id="file" value="{{$file}}">
+                                                <button type="submit" class="dropdown-item">Open</button>
+                                            </form>
+                                            {{-- <a class="dropdown-item" href="{{route('file.open', ['file' => $file])}}">Open</a> --}}
+                                        </li>
                                         <li><a class="dropdown-item" href="#" wire:click="download('{{$file}}')">Download</a></li>
                                         <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modal-delete" data-backdrop="static" data-keyboard="false" wire:click="deleteState('{{$file}}', 'file')">Delete</a></li>
                                         </ul>
@@ -165,7 +173,7 @@
     {{-- Delete Modal --}}
     <div class="modal modal-blur fade" id="modal-delete" tabindex="-1" role="dialog" aria-hidden="true" wire:ignore.self >
         <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
+            <div class="modal-content p-3">
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               <div class="modal-status bg-danger"></div>
               <div class="modal-body text-center py-4">
