@@ -52,7 +52,7 @@
                         <div class="d-flex flex-column flex-fill">
                             <div class="d-flex justify-content-end">
                                 <div class="dropdown">
-                                    <a class="" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <a class="dropdown" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
                                             <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
                                         </svg>
@@ -86,7 +86,7 @@
                             <div class="d-flex flex-column flex-fill">
                                 <div class="d-flex justify-content-end">
                                     <div class="dropdown">
-                                        <a class="" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <a class="dropdown" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
                                                 <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
                                             </svg>
@@ -172,15 +172,21 @@
 
     {{-- Delete Modal --}}
     <div class="modal modal-blur fade" id="modal-delete" tabindex="-1" role="dialog" aria-hidden="true" wire:ignore.self >
-        <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-dialog" role="document">
             <div class="modal-content p-3">
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               <div class="modal-status bg-danger"></div>
-              <div class="modal-body text-center py-4">
+              <div class="modal-body text-center py-4 w-100">
                 <!-- Download SVG icon from http://tabler-icons.io/i/alert-triangle -->
                 <!-- SVG icon code with class="mb-2 text-danger icon-lg" -->
                 <h3>Are you sure?</h3>
                 <div class="text-muted">Do you really want to remove this {{$onDeleteStateType}} ({{basename($onDeleteStateName)}})? What you've done cannot be undone.</div>
+                <div class="mt-2">
+                    <input type="password" wire:model.lazy="master_key" name="master_key" id="master_key" class="form-control text-center" placeholder="Enter master key">
+                    @error('master_key')
+                        <small class="text-danger">{{$message}}</small>
+                    @enderror
+                </div>
               </div>
               <div class="modal-footer">
                 <div class="w-100">
