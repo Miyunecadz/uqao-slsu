@@ -1,6 +1,6 @@
 <aside class="sidebar-nav-wrapper">
     <div class="navbar-logo">
-        APP NAME
+        E-Assistance System of Quality Assurance  Office
     </div>
     <nav class="sidebar-nav">
         <ul>
