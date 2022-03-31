@@ -13,6 +13,7 @@ class FileManager extends Component
     public $currentDirectory = 'public';
     public $directories;
     public $files;
+    public $master_key;
 
     public $previousDirectory;
 
@@ -38,8 +39,8 @@ class FileManager extends Component
         ]);
 
         Storage::putFileAs($this->currentDirectory.'/', $this->fileUpload, $this->fileUpload->getClientOriginalName());
-        $this->close('modal-upload-file');
         $this->mount();
+        $this->close('modal-upload-file');
     }
 
     public function close($modalName)
@@ -63,12 +64,24 @@ class FileManager extends Component
 
     public function deleteConfirm()
     {
+        $this->validate([
+            'master_key' => 'required'
+        ]);
+
+        if($this->master_key !== env('MASTER_KEY'))
+        {
+            $this->master_key = '';
+            return $this->setErrorBag(['master_key' => 'Invalid Master Key']);
+        }
+
         if($this->onDeleteStateType == "directory")
         {
             Storage::deleteDirectory($this->onDeleteStateName);
         }else{
             Storage::delete($this->onDeleteStateName);
         }
+        $this->master_key = '';
+        $this->resetErrorBag();
         $this->close('modal-delete');
         $this->reset(['onDeleteStateName', 'onDeleteStateType']);
         $this->mount();
