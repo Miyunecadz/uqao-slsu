@@ -52,7 +52,7 @@
                                     </li>
                                     <li>
                                         {{-- <a href="{{ route('profile') }}"> <i class="lni lni-user"></i> {{ __('My profile') }}</a> --}}
-                                        <a href="#"> <i class="lni lni-user"></i> {{ __('Setting') }}</a>
+                                        <a href="{{route('setting.index')}}"> <i class="lni lni-user"></i> {{ __('Setting') }}</a>
                                 </li>
                                     <li>
                                         <form method="POST" action="{{ route('logout') }}">

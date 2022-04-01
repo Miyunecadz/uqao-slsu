@@ -1,6 +1,6 @@
 <aside class="sidebar-nav-wrapper">
     <div class="navbar-logo">
-        <h5>E-Assistance System of Quality Assurance  Office</h5>
+        <h5>{{env('APP_NAME')}}</h5>
     </div>
     <nav class="sidebar-nav">
         <ul>

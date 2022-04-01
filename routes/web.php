@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SettingController;
 use App\Http\Livewire\FileManager;
 use App\Http\Livewire\Login;
 use Illuminate\Support\Facades\Response;
@@ -38,4 +39,6 @@ Route::middleware('auth')->group(function(){
     Route::post('/logout', [AuthenticationController::class, 'logout'])->name('logout');
 
     Route::get('/file-manager', FileManager::class)->name('file-manager');
+    Route::get('/setting', [SettingController::class, 'index'])->name('setting.index');
+    Route::post('setting', [SettingController::class, 'update'])->name('setting.update');
 });

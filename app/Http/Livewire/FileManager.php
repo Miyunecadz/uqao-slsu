@@ -68,7 +68,8 @@ class FileManager extends Component
             'master_key' => 'required'
         ]);
 
-        if($this->master_key !== env('MASTER_KEY'))
+        $fileContent = file_get_contents(Storage::path('master_key.txt'));
+        if($this->master_key != trim($fileContent, "\n"))
         {
             $this->master_key = '';
             return $this->setErrorBag(['master_key' => 'Invalid Master Key']);
