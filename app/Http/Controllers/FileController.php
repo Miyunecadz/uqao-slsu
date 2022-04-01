@@ -8,8 +8,10 @@ class FileController extends Controller
 {
     public function open(Request $request)
     {
-        $fileName = basename($request->file);
-        $filePath = "/ViewerJS/#../storage/" . $fileName;
+        $section = explode('/',$request->file);
+        array_splice($section, 0 , 1);
+        $newPath = implode("/",$section);
+        $filePath = "/ViewerJS/#../storage/" . $newPath;
         return view('file', ['file' => $filePath]);
     }
 }
