@@ -24,11 +24,7 @@ Route::get('/login', Login::class)->middleware('guest')->name('login');
 
 Route::middleware('auth')->group(function(){
     Route::get('/home', function(){
-        return redirect(route('dashboard'));
-    });
-
-    Route::get('/', function () {
-        return view('welcome');
+        return redirect(route('file-manager'));
     })->name('dashboard');
 
     Route::post('/file', [FileController::class, 'open'])->name('file.open');
@@ -38,7 +34,7 @@ Route::middleware('auth')->group(function(){
 
     Route::post('/logout', [AuthenticationController::class, 'logout'])->name('logout');
 
-    Route::get('/file-manager', FileManager::class)->name('file-manager');
+    Route::get('/', FileManager::class)->name('file-manager');
     Route::get('/setting', [SettingController::class, 'index'])->name('setting.index');
     Route::post('setting', [SettingController::class, 'update'])->name('setting.update');
 });

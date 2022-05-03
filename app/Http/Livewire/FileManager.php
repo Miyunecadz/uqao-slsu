@@ -111,6 +111,7 @@ class FileManager extends Component
     {
         $this->currentDirectory = $directory;
         $this->mount();
+        // dd($directory);
     }
 
     public function render()
