@@ -14,6 +14,9 @@ class FileManager extends Component
     public $directories;
     public $files;
     public $master_key;
+    public $filters;
+    public $searchName;
+    public $selected;
 
     public $previousDirectory;
 
@@ -23,10 +26,21 @@ class FileManager extends Component
     public $onDeleteStateName;
     public $onDeleteStateType;
 
+
+    private function generateFilter()
+    {
+        $filteredFiles = Storage::allFiles('public');
+        $filteredDirectories = Storage::allDirectories('public');
+        $this->filters = array_merge($filteredFiles, $filteredDirectories);
+    }
+
     public function mount()
     {
         $this->directories = Storage::directories($this->currentDirectory);
         $this->files = Storage::files($this->currentDirectory);
+
+        $this->generateFilter();
+
         $this->generatePaths();
     }
 
@@ -54,6 +68,7 @@ class FileManager extends Component
         array_splice($path, count($path) - 1, 1);
         $newPath = implode("/", $path);
         $this->previousDirectory = $newPath == '' ? 'public' : $newPath;
+        $this->selected = "";
     }
 
     public function deleteState($name, $type)
@@ -117,7 +132,33 @@ class FileManager extends Component
     {
         $this->currentDirectory = $directory;
         $this->mount();
-        // dd($directory);
+    }
+
+    public function getDirectory($path)
+    {
+        $paths = explode('/', $path);
+        array_splice($paths, count($paths) - 1, 1);
+        $newPath = implode("/", $paths);
+        $this->setDirectory($newPath);
+
+        $this->selected = $path;
+
+        $this->close('modal-search-file-directory');
+    }
+
+    public function updatedSearchName()
+    {
+        $this->generateFilter();
+        $filtered = [];
+        foreach($this->filters as $filter)
+        {
+            if(str_contains(strtolower(basename($filter)), strtolower($this->searchName)) && !str_contains(strtolower(basename($filter)), ".gitignore"))
+            {
+                array_push($filtered, $filter);
+            }
+        }
+
+        $this->filters = $filtered;
     }
 
     public function render()

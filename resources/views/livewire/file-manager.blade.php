@@ -6,6 +6,7 @@
             </h6>
         </div>
         <div>
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-search-file-directory">Search</button>
             <a href="#" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modal-upload-file"
                 data-backdrop="static" data-keyboard="false">Upload File</a>
             <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-new-directory"
@@ -49,7 +50,7 @@
                         </div>
                     </div>
                     <div class="card-body" style="cursor: pointer" wire:click="setDirectory('{{$directory}}')">
-                        <h5 class="card-title mb-0">{{basename($directory)}}</h5>
+                        <h5 class="card-title mb-0" @if ($directory == $selected && !$selected == "") style="background: #FFC107; color: #ffffff;" @endif>{{basename($directory)}}</h5>
                     </div>
                     <div id="card_{{$key}}" class="accordion-collapse collapse card-body pt-0"
                         aria-labelledby="card_{{$key}}" data-bs-parent="#accordionThings">
@@ -119,7 +120,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title mb-0">{{basename($file)}}</h5>
+                    <h5 class="card-title mb-0"  @if ($file == $selected && !$selected == "") style="background: #FFC107; color: #ffffff;" @endif>{{basename($file)}}</h5>
                 </div>
                 <div id="file_{{$key}}" class="accordion-collapse collapse card-body pt-0" aria-labelledby="file_{{$key}}"
                     data-bs-parent="#accordionThings">
@@ -189,6 +190,45 @@
         @endforeach
         </div>
     </div>
+
+
+    {{--Search Modal --}}
+<div class="modal modal-blur fade" id="modal-search-file-directory" tabindex="-1" role="dialog" aria-hidden="true"
+wire:ignore.self>
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Search file or directory</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <label for="searchName">Name</label>
+            <input type="text" name="searchName" id="searchName" wire:model.debounce.1000ms="searchName"
+                class="form-control">
+        </div>
+        <div class="modal-footer overflow-auto" style="height: 20rem;">
+            @forelse ($filters as $filter)
+                @if (basename($filter) != ".gitignore")
+                    <div class="card w-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{basename($filter)}}</h5>
+                            <small>{{$filter}}</small>
+                            <a href="#" class="stretched-link" wire:click.prevent="getDirectory('{{$filter}}')"></a>
+                        </div>
+                    </div>
+                @endif
+            @empty
+                <div class="card w-100">
+                    <div class="card-body">
+                        <h5 class="card-title">No Item Found</h5>
+                    </div>
+                </div>
+            @endforelse
+        </div>
+    </div>
+</div>
+</div>
+{{-- End of Search Modal --}}
 
 {{-- New Directory Modal --}}
 <div class="modal modal-blur fade" id="modal-new-directory" tabindex="-1" role="dialog" aria-hidden="true"
@@ -295,6 +335,8 @@
             document.getElementById('directoryName').value = ''
         } else if (event.detail.modalName == 'modal-upload-file') {
             document.getElementById('fileUpload').value = ''
+        }else if(event.detail.modalName == 'modal-search-file-directory'){
+            document.getElementById('searchName').value = ''
         }
     });
 
