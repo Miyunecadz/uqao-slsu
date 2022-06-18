@@ -35,7 +35,7 @@
                 <div class="card h-100">
                     <div class="card-header d-flex">
                         <div>
-                            Directory
+                            Folder
                         </div>
                         <div class="ms-auto">
                             <a href="#" data-bs-toggle="collapse" data-bs-target="#card_{{$key}}" aria-expanded="true"
@@ -125,11 +125,13 @@
                     data-bs-parent="#accordionThings">
                     <hr>
                     <div class="d-flex">
-                        <form action="{{route('file.open')}}" method="post" target="_blank">
+                        {{-- <form action="{{route('file.open')}}" method="post" target="_blank">
                             @csrf
                             <input type="hidden" name="file" id="file" value="{{$file}}">
-                            <button type="submit" class="btn btn-sucess card-link pt-0">Open</button>
-                        </form>
+                            <button type="submit" class="card-link text-success card-link pt-0">Open</button>
+                        </form> --}}
+                        <a class="card-link text-success" target="_blank" href="{{Storage::url($file)}}">Open</a>
+
                         <a class="card-link text-primary" href="#" wire:click="download('{{$file}}')">Download</a>
                         <a class="card-link text-danger" href="#" data-bs-toggle="modal" data-bs-target="#modal-delete"
                             data-backdrop="static" data-keyboard="false"

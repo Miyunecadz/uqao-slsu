@@ -102,6 +102,12 @@ class FileManager extends Component
         $this->mount();
     }
 
+    public function open($filename)
+    {
+        $path = Storage::url($filename);
+        return $path;
+    }
+
     public function download($fileName)
     {
         return Storage::download($fileName);

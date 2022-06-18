@@ -37,7 +37,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
-                  <form action="#" wire:submit.prevent>
+                  <form action="#" wire:submit.prevent method="POST">
                     <div class="row">
                       <div class="col-12">
                         <div class="input-style-1">
@@ -58,7 +58,7 @@
                             <button class="main-btn primary-btn btn-hover w-100 text-center " disabled wire:loading wire:target="authenticate">
                                 Signing In...
                             </button>
-                          <button class="main-btn primary-btn btn-hover w-100 text-center " wire:loading.remove wire:click="authenticate">
+                          <button class="main-btn primary-btn btn-hover w-100 text-center " type="submit" wire:loading.remove wire:click="authenticate">
                             Sign In
                           </button>
                         </div>
