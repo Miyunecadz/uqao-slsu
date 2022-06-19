@@ -6,10 +6,11 @@
             <div class="col-lg-6">
               <div class="auth-cover-wrapper bg-primary-100">
                 <div class="auth-cover">
-                  <div class="title text-center">
+                    <div class="title text-center">
+                      <img src="{{asset('images/slsu-logo.png')}}" height="150" width="150" alt="" srcset="">
                     <h1 class="text-primary mb-10">Welcome</h1>
                     <p class="text-medium">
-                      To E-Assistance System for UQAO of SLSU
+                      To Quality Assurance Database System of SLSU
                     </p>
                   </div>
                   <div class="cover-image">
